@@ -1,0 +1,8 @@
+
+package com.company;
+
+public class ArrayUtils {
+    public static int[] add(int[] array, int i) {
+        return array;
+    }
+}
