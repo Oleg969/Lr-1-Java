@@ -1,0 +1,135 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+import static java.lang.String.format;
+
+public class Main {
+
+    public static void main(String[] args)  {
+        Main assignments = new Main();
+        Main nonStatic = new Main();
+        //#3
+        System.out.println("#3");
+        int[] arr1 = {1, 2, 3, 4, 25, 5, 2, 6, 3, 3};
+        System.out.println(Arrays.toString(nonStatic.insert(arr1, 1, 22)));
+
+        //#12
+        int[] array = assignments.insertionSort(new int[]{1, 4, 2, 5, -1, 7, 234, 23});
+        System.out.println("#12");
+        System.out.println(Arrays.toString(array));
+
+        //#27
+        System.out.println("#27");
+        System.out.println(nonStatic.toOctal(9));
+
+        //#29
+        System.out.println("#29");
+        int[] arr3 = {3, 4124, 4, 4, 4, 241};
+        int[] arr4 = {3, 4124, 4, 241, 0, 2, 1};
+        System.out.println(nonStatic.findMin(arr3, arr4));
+
+        System.out.println("#15");
+        System.out.println(nonStatic.replac("u"));
+
+        System.out.println("apartaments");
+        System.out.println(nonStatic.apartment());
+
+    }
+    public int apartment() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Number apartment = ");
+        int number = in.nextInt();
+        System.out.print("Quantity apartments = ");
+        int quantity = in.nextInt();
+        System.out.print("Quantity floor = ");
+        int floor = in.nextInt();
+        while (number > floor * quantity) {
+            System.out.print("Enter normal values:\n");
+            System.out.print("Number apartment = ");
+            number = in.nextInt();
+        }
+        int remainder = (number - 1) % (floor * quantity);
+        int numberFloor = remainder / quantity + 1;
+        System.out.print("Number floor = ");
+        //return numberFloor;
+        return numberFloor;
+    }
+    //#3 Створіть метод, який дозволяє вставляти в будь яку позицію масиву будь яке число.
+    // Метод повинен повертати новий масив
+    public int[] insert(int[] arr1, int index, int element) {
+
+        int[] newArray = new int[arr1.length + 1];
+        for (int i = 0; i < arr1.length; i++) {
+            if (i < index) {
+                newArray[i] = arr1[i];
+            } else if (i == index) {
+                newArray[index] = element;
+            } else {
+                newArray[i] = arr1[i - 1];
+            }
+        }
+        return newArray;
+    }
+    //#12 Створіть метод, який сортує будь який масив int[] методом вставок
+    public int[] insertionSort(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while (i > 0 && array[i] > current) {
+                array[j + 1] = array[j];
+                j--;
+            }
+            array[j + 1] = current;
+        }
+        return array;
+    }
+    //#15 Створіть 2 методи, які можуть кодувати та розкодувати будь який рядок у відповідності з таблицею
+    // перекодування в якій наприклад символу =а= відповідає символ =й= ... Таблиці перекодування повинні
+    // бути атрибутами класу, в якому будуть знаходитися методи
+    public String replac(String str){
+        String result = "";
+        String str1 = "qwertyuiopasdfghjklzxcvbnm";
+        String str2 = "mnbvcxzlkjhgfdsapoiuytrewq";
+        for (int i=0; i<str.length();i++){
+            char it=str.charAt(i);
+            int position = str1.indexOf(it);
+            result = result + str2.substring(position,position+1);
+        }
+        return result;
+    }
+    //#27 Створіть метод, який приймає параметр int та конвертує його з десятичної у восьмирічну
+    // систему числення та повертає у вигляді String. Приклад- приймає 9, повертає =011=
+    public String toOctal(int number) {
+        if (number == 0) {
+            return "=o0=";
+        }
+        char sign = '0';
+
+        if (number < 0) {
+            sign = '1';
+            number = Math.abs(number);
+        }
+        String result = "";
+        while (number > 0) {
+            int modulo = number % 8;
+            result = modulo + result;
+            number /= 8;
+        }
+        return format("=%co%s=", sign, result);
+    }
+    //#29 Створіть метод, який приймає будь-яку кількість масивів int[]
+    // та повертає найменше число яке є у складі цих масивів
+    public int findMin(int[]... arrays) {
+        int min = 0;
+        for (int[] arr : arrays) {
+            for (int number : arr) {
+                if (min > number) {
+                    min = number;
+                }
+            }
+        }
+        return min;
+    }
+}
